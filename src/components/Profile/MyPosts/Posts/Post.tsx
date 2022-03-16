@@ -6,7 +6,7 @@ type PostType = {
     likeCount: number;
 }
 
-const Post = (props:PostType) => {
+const Post = (props:PostType): JSX.Element => {
     return (
         <div className={s.posts}>
             <div className={s.item}>

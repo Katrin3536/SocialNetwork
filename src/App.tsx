@@ -8,9 +8,14 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
+import {StateType} from './redux/state';
+
+type AppPropsType = {
+    state: StateType
+}
 
 
-function App(): JSX.Element {
+function App(props: AppPropsType): JSX.Element {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -18,8 +23,8 @@ function App(): JSX.Element {
                 <Navbar/>
 
                 <div className="app-wrapper-content">
-                    <Route path="/dialogs" component={Dialogs}/> {/*exact*/}
-                    <Route path="/profile" component={Profile}/>
+                    <Route path="/dialogs" render={() => <Dialogs state={props.state.dialogPage}/>}/>
+                    <Route path="/profile" render={() => <Profile state={props.state.profilePage}/>}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>

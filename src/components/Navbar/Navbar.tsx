@@ -7,6 +7,7 @@ const Navbar = (): JSX.Element => {
         <nav className={s.nav}>
             <div className={`${s.item} ${s.active}`}>
                 <NavLink to="/Profile" activeClassName= {s.active}>Profile</NavLink>
+                {/*<a href=""></a> заменили на navlink to=*/}
             </div>
             <div className={s.item}>
                 <NavLink to="/Dialogs" activeClassName= {s.active}>Messages</NavLink>
