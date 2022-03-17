@@ -1,4 +1,9 @@
- export type DialogsDataType = {
+export type FriendType = {
+    id: number,
+    name: string
+}
+
+export type DialogsDataType = {
     id: number,
     name: string,
      ava: string
@@ -12,6 +17,10 @@
     message: string,
     likeCount: number,
 }
+export type FriendsType = {
+    friends: FriendType[]
+}
+
 
 export type ProfilePageType = {
     postData: PostDataType[],
@@ -22,9 +31,11 @@ export type DialogPageType = {
     messages: MessageDataType[]
 }
 
+
 export type StateType = {
     profilePage: ProfilePageType,
-    dialogPage: DialogPageType
+    dialogPage: DialogPageType,
+    siteBar: FriendsType
 }
 
 let state: StateType = {
@@ -48,6 +59,13 @@ let state: StateType = {
     {id: 2, message: 'How are you?'},
     {id: 3, message: 'Are you ok?'},
 ]
+    },
+    siteBar: {
+        friends: [
+            {id: 1, name: 'Masha'},
+            {id: 2, name: 'Sasha'},
+            {id: 3, name: 'Dasha'},
+        ]
     },
 }
 

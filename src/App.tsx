@@ -14,13 +14,12 @@ type AppPropsType = {
     state: StateType
 }
 
-
 function App(props: AppPropsType): JSX.Element {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar/>
+                <Navbar state={props.state.siteBar}/>
 
                 <div className="app-wrapper-content">
                     <Route path="/dialogs" render={() => <Dialogs state={props.state.dialogPage}/>}/>
