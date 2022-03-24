@@ -10,9 +10,10 @@ type FriendsType = {
 const Friends = (props: FriendsType) => {
     return (
         <div className={s.group}>
-            <div className={s.title}>Friends</div>
-            <div className={s.friends}>
 
+            <div className={s.title}>Friends</div>
+
+            <div className={s.friends}>
                 {props.stateFriend.map(friend => <Friend name={friend.name}/>)}
             </div>
         </div>

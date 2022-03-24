@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from '../render';
+
 export type FriendType = {
     id: number,
     name: string
@@ -68,6 +70,17 @@ let state: StateType = {
         ]
     },
 }
+
+export let addPost =(postMessage:string)=>{
+    let newPost:PostDataType = {
+        id: new Date().getTime(),
+        message: postMessage,
+        likeCount: 0,
+    }
+    state.profilePage.postData.push(newPost)
+    rerenderEntireTree(state)
+}
+
 
 export default state;
 
