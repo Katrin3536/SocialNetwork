@@ -8,11 +8,12 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import {StateType} from './redux/state';
+import {StateType, ubdateNewPostText} from './redux/state';
 
 type AppPropsType = {
     state: StateType,
-    addPost:(postMessage:string)=>void
+    addPost:()=>void
+    ubdateNewPostText:(newText:string)=>void
 }
 
 function App(props: AppPropsType): JSX.Element {
@@ -24,7 +25,7 @@ function App(props: AppPropsType): JSX.Element {
 
                 <div className="app-wrapper-content">
                     <Route path="/dialogs" render={() => <Dialogs state={props.state.dialogPage}/>}/>
-                    <Route path="/profile" render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>}/>
+                    <Route path="/profile" render={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost} ubdateNewPostText={props.ubdateNewPostText}/>}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>

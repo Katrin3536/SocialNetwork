@@ -1,4 +1,6 @@
-import {rerenderEntireTree} from '../render';
+let rerenderEntireTree=()=> {
+    console.log('state was changed');
+}
 
 export type FriendType = {
     id: number,
@@ -26,6 +28,7 @@ export type FriendsType = {
 
 export type ProfilePageType = {
     postData: PostDataType[],
+    newPostText: string,
 }
 
 export type DialogPageType = {
@@ -45,7 +48,8 @@ let state: StateType = {
         postData: [
             {id: 1, message: 'Hi! How are you?', likeCount: 10},
             {id: 2, message: 'My first post', likeCount: 15},
-        ]
+        ],
+        newPostText: ""
     },
     dialogPage: {
         dialogs: [
@@ -71,16 +75,24 @@ let state: StateType = {
     },
 }
 
-export let addPost =(postMessage:string)=>{
+export const addPost =()=>{
     let newPost:PostDataType = {
         id: new Date().getTime(),
-        message: postMessage,
+        message: state.profilePage.newPostText,
         likeCount: 0,
     }
     state.profilePage.postData.push(newPost)
-    rerenderEntireTree(state)
+    state.profilePage.newPostText = ""
+    rerenderEntireTree()
+}
+export const ubdateNewPostText =(newText:string)=>{
+    state.profilePage.newPostText = newText
+    rerenderEntireTree()
 }
 
+export const subscribe = (observer:()=>void) => {
+    rerenderEntireTree=observer
+}
 
 export default state;
 
