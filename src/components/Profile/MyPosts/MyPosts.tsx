@@ -1,25 +1,27 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Posts/Post';
-import {PostDataType} from '../../../redux/state';
+import {addPostActionCreator, updateNewTextActionCreator} from '../../../redux/profile-reducer';
+import {ActionType, PostDataType } from '../../../redux/state';
+
 
 type MyPostType = {
     postData: PostDataType[],
-    addPost:()=>void,
     newPostText: string,
-    ubdateNewPostText:(newText:string)=>void
+    dispatch: (action: ActionType) => void,
 }
 
 const MyPosts = (props: MyPostType): JSX.Element => {
 
     let postElement: JSX.Element[] = props.postData.map(post => <Post key={post.id} message={post.message} likeCount={post.likeCount}/>);
 
+
     const addPost = () => {
-        props.addPost && props.addPost();
+        props.dispatch(addPostActionCreator())
     };
 
  const onChangeTextArea = (e:ChangeEvent<HTMLTextAreaElement>) => {
-     props.ubdateNewPostText(e.currentTarget.value);
+     props.dispatch(updateNewTextActionCreator(e.currentTarget.value))
  }
 
     return (
@@ -34,8 +36,6 @@ const MyPosts = (props: MyPostType): JSX.Element => {
             </div>
             <div className={s.posts}>
                 {postElement}
-                {/*<Post message={PostData[0].message} likeCount={PostData[0].likeCount}/>*/}
-                {/*<Post message={PostData[1].message} likeCount={PostData[1].likeCount}/>*/}
             </div>
         </div>
     );

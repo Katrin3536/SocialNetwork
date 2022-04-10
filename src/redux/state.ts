@@ -1,3 +1,7 @@
+import dialogReducer, {sendMessageActionCreator, updateNewMessageBodyActionCreator } from './dialog-reducer';
+import profileReducer, {addPostActionCreator, updateNewTextActionCreator } from './profile-reducer';
+import sitebarReducer from './sitebar-reducer';
+
 export type FriendType = {
     id: number,
     name: string
@@ -29,7 +33,8 @@ export type ProfilePageType = {
 
 export type DialogPageType = {
     dialogs: DialogsDataType[],
-    messages: MessageDataType[]
+    messages: MessageDataType[],
+    newMessageBody: string
 }
 
 
@@ -40,49 +45,78 @@ export type StateType = {
 }
 
 export type StoreType = {
-    _state:StateType,
-    addPost:()=>void,
-    ubdateNewPostText:(newText: string)=>void,
-    subscribe:(observer: () => void)=>void,
-    _rerenderEntireTree:()=>void,
-    getState:()=>StateType,
-
-
+    _state: StateType,
+    addPost: () => void,
+    updateNewPostText: (newText: string) => void,
+    subscribe: (observer: () => void) => void,
+    _rerenderEntireTree: () => void,
+    getState: () => StateType,
+    dispatch: (action: ActionType) => void
 }
 
-const store:StoreType = {
+export type ActionType = ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewTextActionCreator>
+    | ReturnType<typeof sendMessageActionCreator>
+    | ReturnType<typeof updateNewMessageBodyActionCreator>
+
+const store: StoreType = {
     _state: {
         profilePage: {
             postData: [
-                { id: 1, message: 'Hi! How are you?', likeCount: 10 },
-                { id: 2, message: 'My first post', likeCount: 15 },
+                {id: 1, message: 'Hi! How are you?', likeCount: 10},
+                {id: 2, message: 'My first post', likeCount: 15},
             ],
-            newPostText: ''
+            newPostText: '',
         },
         dialogPage: {
             dialogs: [
-                { id: 1, name: 'Masha', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU' },
-                { id: 2, name: 'Yulia', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU' },
-                { id: 3, name: 'Katya', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU' },
-                { id: 4, name: 'Andrew', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU' },
-                { id: 5, name: 'Pavel', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU' },
-                { id: 6, name: 'Sergey', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU' },
+                {
+                    id: 1,
+                    name: 'Masha',
+                    ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU'
+                },
+                {
+                    id: 2,
+                    name: 'Yulia',
+                    ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU'
+                },
+                {
+                    id: 3,
+                    name: 'Katya',
+                    ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU'
+                },
+                {
+                    id: 4,
+                    name: 'Andrew',
+                    ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU'
+                },
+                {
+                    id: 5,
+                    name: 'Pavel',
+                    ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU'
+                },
+                {
+                    id: 6,
+                    name: 'Sergey',
+                    ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU'
+                },
             ],
             messages: [
-                { id: 1, message: 'Hi' },
-                { id: 2, message: 'How are you?' },
-                { id: 3, message: 'Are you ok?' },
-            ]
+                {id: 1, message: 'Hi'},
+                {id: 2, message: 'How are you?'},
+                {id: 3, message: 'Are you ok?'},
+            ],
+            newMessageBody: "",
         },
         siteBar: {
             friends: [
-                { id: 1, name: 'Masha' },
-                { id: 2, name: 'Sasha' },
-                { id: 3, name: 'Dasha' },
+                {id: 1, name: 'Masha'},
+                {id: 2, name: 'Sasha'},
+                {id: 3, name: 'Dasha'},
             ]
         },
     },
-    addPost() {
+    addPost(){
         let newPost: PostDataType = {
             id: new Date().getTime(),
             message: this._state.profilePage.newPostText,
@@ -92,7 +126,7 @@ const store:StoreType = {
         this._state.profilePage.newPostText = '';
         this._rerenderEntireTree();
     },
-    ubdateNewPostText(newText: string) {
+    updateNewPostText(newText) {
         this._state.profilePage.newPostText = newText;
         this._rerenderEntireTree();
     },
@@ -103,8 +137,15 @@ const store:StoreType = {
         console.log('state was changed');
     },
     getState() {
-        return this._state
+        return this._state;
     },
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogPage = dialogReducer(this._state.dialogPage, action);
+        this._state.siteBar = sitebarReducer(this._state.siteBar, action);
+        this._rerenderEntireTree();
+
+    }
 };
 
 export default store;
