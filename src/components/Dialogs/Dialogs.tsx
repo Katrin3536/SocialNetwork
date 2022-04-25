@@ -1,36 +1,33 @@
 import React, {ChangeEvent} from 'react';
-import { sendMessageActionCreator, updateNewMessageBodyActionCreator } from '../../redux/dialog-reducer';
-import {ActionType,DialogPageType} from '../../redux/state';
-
-
-
+import {DialogPageType} from '../../redux/dialog-reducer';
 import s from './Dialogs.module.css';
 import DialogsItem from './DialogsItem/DialogsItem';
 import Message from './Message/Message';
 
 
 type DialogsType = {
-    state: DialogPageType,
-    dispatch: (action: ActionType) => void
+    updateNewMessageBody: (body: string) => void,
+    sendMessage: () => void,
+    dialogPage: DialogPageType
 }
 
 const Dialogs = (props: DialogsType): JSX.Element => {
 
-    let dialogsItemElements: JSX.Element[] = props.state.dialogs.map(dialog => <DialogsItem key={dialog.id}
-                                                                                            name={dialog.name}
-                                                                                            id={dialog.id}
-                                                                                            ava={dialog.ava}/>);
-    let messageItemElement: JSX.Element[] = props.state.messages.map(message => <Message key={message.id}
-                                                                                         message={message.message}/>);
+    let dialogsItemElements: JSX.Element[] = props.dialogPage.dialogs.map(dialog => <DialogsItem key={dialog.id}
+                                                                                                 name={dialog.name}
+                                                                                                 id={dialog.id}
+                                                                                                 ava={dialog.ava}/>);
+    let messageItemElement: JSX.Element[] = props.dialogPage.messages.map(message => <Message key={message.id}
+                                                                                              message={message.message}/>);
 
-    let newMessageBody: string = props.state.newMessageBody;
+    let newMessageBody: string = props.dialogPage.newMessageBody;
 
     const onSendMessageClick = () => {
-        props.dispatch(sendMessageActionCreator());
+        props.sendMessage();
     };
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value;
-        props.dispatch(updateNewMessageBodyActionCreator(body));
+        props.updateNewMessageBody(body);
     };
 
     return (
