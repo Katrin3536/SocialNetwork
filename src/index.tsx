@@ -3,13 +3,11 @@ import './index.css';
 import ReactDOM from 'react-dom';
 import App from './App';
 import store from './redux/redux-store';
+import {Provider} from 'react-redux';
 
-
-let _rerenderEntireTree = ()=> {
     ReactDOM.render(
-        <App store = {store}/>,
-        document.getElementById('root'))
-}
-_rerenderEntireTree()
+        <Provider store={store}>
+            <App/>
+        </Provider>,
+        document.getElementById('root'));
 
-store.subscribe(_rerenderEntireTree)

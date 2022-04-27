@@ -17,14 +17,14 @@ const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST = 'ADD-POST';
 
 let initialState = {
-        postData: [
-            {id: 1, message: 'Hi! How are you?', likeCount: 10},
-            {id: 2, message: 'My first post', likeCount: 15},
-        ],
-        newPostText: '',
-    };
+    postData: [
+        {id: 1, message: 'Hi! How are you?', likeCount: 10},
+        {id: 2, message: 'My first post', likeCount: 15},
+    ],
+    newPostText: '',
+};
 
-const ProfileReducer = (state:ProfilePageType = initialState, action:ActionType) => {
+const ProfileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
             let newPost: PostDataType = {
@@ -32,25 +32,29 @@ const ProfileReducer = (state:ProfilePageType = initialState, action:ActionType)
                 message: state.newPostText,
                 likeCount: 0,
             };
-            state.postData.push(newPost);
-            state.newPostText = '';
-            return state;
+            return {
+                ...state,
+                postData: [...state.postData, newPost],
+                newPostText: ''
+            };
         case 'UPDATE-NEW-POST-TEXT':
-            state.newPostText = action.newText;
-            return state;
+            return {
+                ...state,
+                newPostText: action.newText
+            };
         default:
             return state;
     }
 };
-export const addPostActionCreator = ()=>{
-    return {type: ADD_POST} as const
-}
+export const addPostActionCreator = () => {
+    return {type: ADD_POST} as const;
+};
 
-export const updateNewTextActionCreator = (newText:string)=>{
+export const updateNewTextActionCreator = (newText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
-        newText:newText
-    } as const
-}
+        newText: newText
+    } as const;
+};
 
 export default ProfileReducer;

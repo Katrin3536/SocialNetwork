@@ -18,7 +18,7 @@ let initialState = {
         ]
     }
 
-const SitebarReducer = (state:FriendsType = initialState, action:ActionType) => {
+const SitebarReducer = (state:FriendsType = initialState, action:ActionType):FriendsType => {
     return state;
 }
 export default SitebarReducer;

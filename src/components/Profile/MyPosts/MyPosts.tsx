@@ -1,20 +1,11 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css';
 import Post from './Posts/Post';
-import {PostDataType } from '../../../redux/profile-reducer';
-
-
-type MyPostType = {
-    postData: PostDataType[],
-    newPostText: string,
-    updateNewPostText:(value: string)=>void,
-    addPost:()=>void
-}
+import { MyPostType } from './MyPostsContainer';
 
 const MyPosts = (props: MyPostType): JSX.Element => {
 
     let postElement: JSX.Element[] = props.postData.map(post => <Post key={post.id} message={post.message} likeCount={post.likeCount}/>);
-
 
     const onAddPost = () => {
         props.addPost()
