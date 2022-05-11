@@ -25,7 +25,7 @@ const Navbar = (props: mapStateToPropsType): JSX.Element => {
                 <NavLink to="/Settings" activeClassName= {s.active}>Settings</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to="/Users" activeClassName= {s.active}>Find users</NavLink>
+                <NavLink to="/Users" activeClassName= {s.active}>Users</NavLink>
             </div>
 
             <Friends stateFriend= {props.siteBar}/>
