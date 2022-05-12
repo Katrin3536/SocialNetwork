@@ -10,7 +10,6 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 
-
 function App(): JSX.Element {
     return (
         <BrowserRouter>
