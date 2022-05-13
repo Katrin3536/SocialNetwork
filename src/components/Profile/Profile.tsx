@@ -1,11 +1,16 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import {ProfileType} from '../../redux/profile-reducer';
 
-const Profile = ():JSX.Element => {
+export type PropsType = {
+    profile: ProfileType
+}
+
+const Profile: React.FC<PropsType> = (props) => {
     return (
         <div>
-           <ProfileInfo/>
+           <ProfileInfo profile={props.profile}/>
             <MyPostsContainer
             />
         </div>

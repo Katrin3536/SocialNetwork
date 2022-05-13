@@ -6,15 +6,40 @@ export type PostDataType = {
     likeCount: number,
 }
 
+
+export type ProfileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+    photos: {
+        small: string
+        large: string
+    }
+}
+
 export type ProfilePageType = {
     postData: PostDataType[],
     newPostText: string,
+    profile: ProfileType | null
 }
 
-export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewTextActionCreator>
+export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewTextActionCreator> | ReturnType<typeof setUserProfileAC>
 
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST = 'ADD-POST';
+const SET_USER_PROFILE = 'SET-USER-PROFILE';
+
 
 let initialState = {
     postData: [
@@ -22,11 +47,12 @@ let initialState = {
         {id: 2, message: 'My first post', likeCount: 15},
     ],
     newPostText: '',
+    profile: null
 };
 
 const ProfileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
     switch (action.type) {
-        case 'ADD-POST':
+        case ADD_POST:
             let newPost: PostDataType = {
                 id: new Date().getTime(),
                 message: state.newPostText,
@@ -37,10 +63,15 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ActionTyp
                 postData: [...state.postData, newPost],
                 newPostText: ''
             };
-        case 'UPDATE-NEW-POST-TEXT':
+        case UPDATE_NEW_POST_TEXT:
             return {
                 ...state,
                 newPostText: action.newText
+            };
+        case SET_USER_PROFILE:
+            return {
+                ...state,
+                profile: action.profile
             };
         default:
             return state;
@@ -54,6 +85,12 @@ export const updateNewTextActionCreator = (newText: string) => {
     return {
         type: UPDATE_NEW_POST_TEXT,
         newText: newText
+    } as const;
+};
+export const setUserProfileAC= (profile: ProfileType) => {
+    return {
+        type: SET_USER_PROFILE,
+        profile
     } as const;
 };
 

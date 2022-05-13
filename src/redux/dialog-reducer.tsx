@@ -1,4 +1,6 @@
 import React from 'react';
+import boy from '../assets/images/boyImage.png'
+import girl from '../assets/images/girlImage.jpg'
 
 export type MessageDataType = {
     id: number,
@@ -29,32 +31,32 @@ let initialState = {
         {
             id: 1,
             name: 'Masha',
-            ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU'
+            ava: girl
         },
         {
             id: 2,
             name: 'Yulia',
-            ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU'
+            ava: girl
         },
         {
             id: 3,
             name: 'Katya',
-            ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdppf1lDbWRxFZdW9QfosE0BGsA28ks2jnYcZHl9bFiVtM8RiuZLHjtOKRrL7muVtdcmo&usqp=CAU'
+            ava: girl
         },
         {
             id: 4,
             name: 'Andrew',
-            ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU'
+            ava: boy
         },
         {
             id: 5,
             name: 'Pavel',
-            ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU'
+            ava: boy
         },
         {
             id: 6,
             name: 'Sergey',
-            ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2QFaQyezndgniERWn-5S9oNrdXzK9yALQCj_V384ErrrH7il5bou3nGTREZCPMsoCjGY&usqp=CAU'
+            ava: boy
         },
     ],
     messages: [

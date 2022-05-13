@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Users.module.css';
 import photo from '../../assets/images/avatarIcon.jpg';
 import {UsersType} from '../../redux/users-reducer';
+import {NavLink} from 'react-router-dom';
 
 export type UsersPropsType =  {
     onPageChanged:(p:number)=>void,
@@ -36,7 +37,9 @@ export const Users = (props:UsersPropsType) => {
                 props.users.map(u => <div key={u.id}>
                    <span>
                        <div>
-                           <img className={s.usersPhoto} src={u.photos.small != null ? u.photos.small : photo}/>
+                           <NavLink to={'/profile/' + u.id}><img className={s.usersPhoto}
+                                                                src={u.photos.small != null ? u.photos.small : photo}/>
+                           </NavLink>
                        </div>
                        <div> {u.followed
                            ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>

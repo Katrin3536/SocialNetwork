@@ -10,7 +10,6 @@ import {
     UsersType
 } from '../../redux/users-reducer';
 import {ReducerType} from '../../redux/redux-store';
-import {Dispatch} from 'redux';
 import axios from 'axios';
 import {Users} from './Users';
 import {Preloader} from '../common/preloader/Preloader';

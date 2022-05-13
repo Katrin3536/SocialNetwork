@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './Post.module.css';
+import picture from '../../../../assets/images/cat.jpg'
 
 type PostType = {
     message: string;
@@ -10,7 +11,7 @@ const Post = (props:PostType): JSX.Element => {
     return (
         <div className={s.posts}>
             <div className={s.item}>
-                <img src="https://shapka-youtube.ru/wp-content/uploads/2021/02/avatarka-dlya-skaypa-dlya-parney.jpg"/>
+                <img src={picture}/>
                 {props.message}
                 <div>
                     <span>Like{props.likeCount}</span>
