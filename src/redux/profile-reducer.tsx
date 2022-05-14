@@ -8,6 +8,7 @@ export type PostDataType = {
 
 
 export type ProfileType = {
+    aboutMe:string
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string

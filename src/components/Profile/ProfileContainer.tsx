@@ -5,6 +5,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {ProfileType, setUserProfileAC} from '../../redux/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Preloader} from '../common/preloader/Preloader';
 
 
 export type PathParamsType = {
@@ -36,11 +37,10 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType, Reduce
 
     render() {
         return (!this.props.profile)
-            ? <div>Loader</div>
+            ? <Preloader/>
             : <div>
                 <Profile profile={this.props.profile}/>
               </div>
-
     }
 };
 

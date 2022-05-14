@@ -18,7 +18,9 @@ const ProfileInfo = (props:ProfileInfoType): JSX.Element => {
             </div>
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
-                ava+description
+                <div> NAME:  {props.profile.fullName}</div>
+                <div>About me: {props.profile.aboutMe}</div>
+                <div>Slogan: {props.profile.lookingForAJobDescription}</div>
             </div>
         </div>
     );

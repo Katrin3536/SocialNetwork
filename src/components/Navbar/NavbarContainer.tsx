@@ -14,6 +14,6 @@ let mapStateToProps = (state:ReducerType): mapStateToPropsType=> {
     }
 }
 
-const NavbarContainer = connect(mapStateToProps)(Navbar)
+const NavbarContainer = connect<mapStateToPropsType,{},{},ReducerType >(mapStateToProps)(Navbar)
 
 export default NavbarContainer;
