@@ -13,6 +13,8 @@ export type UsersPropsType = {
     users: UsersType[],
     follow: (id: number) => void,
     unfollow: (id: number) => void,
+    toggleFollowingProgress:(isFetching: boolean, userId: number )=>void,
+    followingInProgress:Array<number>,
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -43,22 +45,26 @@ export const Users = (props: UsersPropsType) => {
                            </NavLink>
                        </div>
                        <div> {u.followed
-                           ? <button onClick={
+                           ? <button disabled={props.followingInProgress.some(id=> id == u.id)} onClick={
                                () => {
+                                   props.toggleFollowingProgress(true, u.id)
                                    UsersAPI.deleteUsers(u.id).
                                    then(data => {
                                        if (data.resultCode === 0) {
                                            props.unfollow(u.id);
                                        }
+                                       props.toggleFollowingProgress(false, u.id)
                                    });
                                }}>Unfollow</button>
-                           : <button onClick={
+                           : <button  disabled={props.followingInProgress.some(id=> id == u.id)} onClick={
                                () => {
+                                   props.toggleFollowingProgress(true, u.id)
                                    UsersAPI.postUsers(u.id)
                                        .then(data => {
                                        if (data.resultCode === 0) {
                                            props.follow(u.id);
                                        }
+                                           props.toggleFollowingProgress(false, u.id)
                                    });
                                }}>Follow</button>
                        }

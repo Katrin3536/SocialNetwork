@@ -4,7 +4,7 @@ import {
     followAC,
     setCurrentPageAC,
     setTotalCountAC,
-    setUsersAC,
+    setUsersAC, toggleFollowingProgressAC,
     toggleIsFetchingAC,
     unfollowAC,
     UsersType
@@ -19,7 +19,8 @@ export type mapStateToPropsType = {
     pageSize: number
     totalUsersCount: number,
     currentPage: number
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: Array<number>
 }
 
 export type mapDispatchToPropsType = {
@@ -28,7 +29,8 @@ export type mapDispatchToPropsType = {
     setUsers: (users: UsersType[]) => void,
     setCurrentPage: (currentPage: number) => void,
     setTotalUsersCount: (tottalCount: number) => void,
-    toggleIsFetching: (isFetching: boolean) => void
+    toggleIsFetching: (isFetching: boolean) => void,
+    toggleFollowingProgress:(isFetching: boolean, userId: number)=>void,
 }
 
 
@@ -64,6 +66,8 @@ class UsersContainer extends React.Component<UsersAPIComponentPropsType, Reducer
                 unfollow={this.props.unfollow}
                 onPageChanged={this.onPageChanged}
                 users={this.props.users}
+                toggleFollowingProgress={this.props.toggleFollowingProgress}
+                followingInProgress = {this.props.followingInProgress}
             />
         </>;
     }
@@ -76,6 +80,7 @@ const mapStateToProps = (state: ReducerType): mapStateToPropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     };
 };
 
@@ -98,6 +103,9 @@ const mapStateToProps = (state: ReducerType): mapStateToPropsType => {
 //         },
 //         toggleIsFetching: (isFetching: boolean) => {
 //             dispatch(toggleIsFetchingAC(isFetching));
+//         },
+//         toggleFollowingProgress: (isFetching: boolean) => {
+//             dispatch(toggleFollowingProgressAC(isFetching));
 //         }
 //     };
 // };
@@ -109,4 +117,5 @@ export default connect<mapStateToPropsType,mapDispatchToPropsType,{},ReducerType
     setCurrentPage:setCurrentPageAC,
     setTotalUsersCount:setTotalCountAC,
     toggleIsFetching:toggleIsFetchingAC,
+    toggleFollowingProgress: toggleFollowingProgressAC
     })(UsersContainer);

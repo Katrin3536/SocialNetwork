@@ -11,7 +11,8 @@ let rootReducer = combineReducers({
     dialogPage: DialogReducer,
     siteBar: SitebarReducer,
     usersPage: UsersReducer,
-    auth:AuthReducer
+    auth:AuthReducer,
+
 })
 
 export type ReducerType = ReturnType<typeof rootReducer>
