@@ -1,6 +1,7 @@
 import React from 'react';
 import boy from '../assets/images/boyImage.png'
 import girl from '../assets/images/girlImage.jpg'
+import {AppActionsType} from './redux-store';
 
 export type MessageDataType = {
     id: number,
@@ -19,7 +20,7 @@ export type DialogPageType = {
     newMessageBody: string
 }
 
-export type ActionType =
+export type DialogActionType =
     ReturnType<typeof sendMessageActionCreator>
     | ReturnType<typeof updateNewMessageBodyActionCreator>
 
@@ -67,7 +68,7 @@ let initialState = {
     newMessageBody: '',
 };
 
-const DialogReducer = (state: DialogPageType = initialState, action: ActionType): DialogPageType => {
+const DialogReducer = (state: DialogPageType = initialState, action: AppActionsType): DialogPageType => {
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY':
             return {

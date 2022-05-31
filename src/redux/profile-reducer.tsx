@@ -1,4 +1,8 @@
 import React from 'react';
+import {Dispatch} from 'redux';
+import {ProfileAPI} from '../api/api';
+import {AppActionsType, AppThunk, ReducerType} from './redux-store';
+import {ThunkAction} from 'redux-thunk';
 
 export type PostDataType = {
     id: number,
@@ -35,7 +39,7 @@ export type ProfilePageType = {
     profile: ProfileType | null
 }
 
-export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewTextActionCreator> | ReturnType<typeof setUserProfileAC>
+export type ProfileActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewTextActionCreator> | ReturnType<typeof setUserProfileAC>
 
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST = 'ADD-POST';
@@ -50,7 +54,7 @@ let initialState = {
     profile: null
 };
 
-const ProfileReducer = (state: ProfilePageType = initialState, action: ActionType): ProfilePageType => {
+const ProfileReducer = (state: ProfilePageType = initialState, action: AppActionsType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PostDataType = {
@@ -93,5 +97,12 @@ export const setUserProfileAC= (profile: ProfileType) => {
         profile
     } as const;
 };
+
+export const getUserProfileTC=(userId:number):AppThunk=>(dispatch)=>{
+    ProfileAPI.getProfile(userId)
+        .then(data => {
+        dispatch(setUserProfileAC(data));
+    });
+}
 
 export default ProfileReducer;
