@@ -6,7 +6,8 @@ import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 
 type mapStateToPropsType = {
-    dialogPage: DialogPageType
+    dialogPage: DialogPageType,
+    isAuth: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -18,7 +19,8 @@ export type DialogsType = mapDispatchToPropsType & mapStateToPropsType
 
 let mapStateToProps = (state:ReducerType): mapStateToPropsType=> {
     return {
-        dialogPage:state.dialogPage
+        dialogPage:state.dialogPage,
+        isAuth: state.auth.isAuth
     }
 }
 
