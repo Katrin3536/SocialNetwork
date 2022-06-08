@@ -1,8 +1,6 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {ProfileAPI} from '../api/api';
-import {AppActionsType, AppThunk, ReducerType} from './redux-store';
-import {ThunkAction} from 'redux-thunk';
+import { AppThunk} from './redux-store';
 
 export type PostDataType = {
     id: number,
@@ -54,7 +52,7 @@ let initialState = {
     profile: null
 };
 
-const ProfileReducer = (state: ProfilePageType = initialState, action: AppActionsType): ProfilePageType => {
+const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PostDataType = {

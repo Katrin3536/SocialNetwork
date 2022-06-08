@@ -1,6 +1,5 @@
 import React from 'react';
 import {ProfileActionType} from './profile-reducer';
-import {AppActionsType} from './redux-store';
 
 export type FriendType = {
     id: number,
@@ -19,7 +18,7 @@ let initialState = {
         ]
     }
 
-const SitebarReducer = (state:FriendsType = initialState, action:AppActionsType):FriendsType => {
+const SitebarReducer = (state:FriendsType = initialState, action:ProfileActionType):FriendsType => {
     return state;
 }
 export default SitebarReducer;

@@ -1,8 +1,6 @@
 import React from 'react';
-import {Dispatch} from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import {AuthAPI} from '../api/api';
-import {AppActionsType, AppThunk, ReducerType} from './redux-store';
+import { AppThunk} from './redux-store';
 
 export type AuthType = {
     id: number | null,
@@ -22,7 +20,7 @@ let initialState = {
     isAuth:false
 };
 
-const AuthReducer = (state: AuthType = initialState, action: AppActionsType): AuthType => {
+const AuthReducer = (state: AuthType = initialState, action: AuthActionType): AuthType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {

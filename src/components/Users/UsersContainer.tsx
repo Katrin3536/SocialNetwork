@@ -1,15 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {
-    followSuccessAC, getUsersThunkCreator,
+    followSuccessAC,
+    getUsersThunkCreator,
     setCurrentPageAC,
-    toggleFollowingProgressAC,
     unfollowSuccessAC,
     UsersType
 } from '../../redux/users-reducer';
 import {ReducerType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/preloader/Preloader';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 export type mapStateToPropsType = {
     users: UsersType[],
@@ -111,13 +113,16 @@ const mapStateToProps = (state: ReducerType): mapStateToPropsType => {
 //     };
 // };
 
-export default connect<mapStateToPropsType, mapDispatchToPropsType, {}, ReducerType>(mapStateToProps, {
-    follow: followSuccessAC,
-    unfollow: unfollowSuccessAC,
-    // setUsers: setUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    // setTotalUsersCount: setTotalCountAC,
-    // toggleIsFetching: toggleIsFetchingAC,
-    // toggleFollowingProgress: toggleFollowingProgressAC,
-    getUsers: getUsersThunkCreator,
-})(UsersContainer);
+export default compose<React.ComponentType>(
+    withAuthRedirect,
+        connect<mapStateToPropsType, mapDispatchToPropsType, {}, ReducerType>(mapStateToProps, {
+            follow: followSuccessAC,
+            unfollow: unfollowSuccessAC,
+            // setUsers: setUsersAC,
+            setCurrentPage: setCurrentPageAC,
+            // setTotalUsersCount: setTotalCountAC,
+            // toggleIsFetching: toggleIsFetchingAC,
+            // toggleFollowingProgress: toggleFollowingProgressAC,
+            getUsers: getUsersThunkCreator,
+        })
+)(UsersContainer)

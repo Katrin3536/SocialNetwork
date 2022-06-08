@@ -1,8 +1,7 @@
 import React from 'react';
-import {Dispatch} from 'redux';
 import {UsersAPI} from '../api/api';
-import {AppActionsType, AppThunk, ReducerType} from './redux-store';
-import {ThunkAction} from 'redux-thunk';
+import { AppThunk} from './redux-store';
+
 
 export type UsersType = {
     id: number,
@@ -51,7 +50,7 @@ let initialState = {
     followingInProgress: [],
 };
 
-const UsersReducer = (state: UsersPageType = initialState, action: AppActionsType): UsersPageType => {
+const UsersReducer = (state: UsersPageType = initialState, action: UserActionType): UsersPageType => {
     switch (action.type) {
         case FOLLOW:
             return {...state, users: state.users.map(el => el.id === action.userID ? {...el, followed: true} : el)};
