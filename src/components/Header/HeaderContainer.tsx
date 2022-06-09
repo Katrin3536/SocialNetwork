@@ -3,6 +3,7 @@ import {ReducerType} from '../../redux/redux-store';
 import Header from './Header';
 import {connect} from 'react-redux';
 import {getAuthUserDataTC, setAuthUserDataAC} from '../../redux/auth-reducer';
+import { compose } from 'redux';
 
 export type mapStateToPropsType = {
     isAuth: boolean,
@@ -35,4 +36,8 @@ let mapStateToProps = (state: ReducerType): mapStateToPropsType => {
     };
 };
 
-export default connect<mapStateToPropsType, mapDispatchToPropsType, {}, ReducerType>(mapStateToProps, {setAuthUserData: setAuthUserDataAC, getAuthUser: getAuthUserDataTC})(HeaderContainer);
+export default compose<React.ComponentType>(connect<mapStateToPropsType, mapDispatchToPropsType, {}, ReducerType>(mapStateToProps,
+    {setAuthUserData: setAuthUserDataAC, getAuthUser: getAuthUserDataTC}))(HeaderContainer)
+//
+// export default connect<mapStateToPropsType, mapDispatchToPropsType, {}, ReducerType>(mapStateToProps,
+//     {setAuthUserData: setAuthUserDataAC, getAuthUser: getAuthUserDataTC})(HeaderContainer);

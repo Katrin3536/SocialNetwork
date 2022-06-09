@@ -7,7 +7,7 @@ import {
 } from '../../../redux/profile-reducer';
 import {ReducerType} from '../../../redux/redux-store';
 import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
 
 export type mapStateToPropsType = {
     newPostText: string
@@ -39,7 +39,6 @@ let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
     };
 };
 
-const MyPostsContainer = connect<mapStateToPropsType,mapDispatchToPropsType,{},ReducerType >(mapStateToProps, mapDispatchToProps)(MyPosts);
-
-
-export default MyPostsContainer;
+export default compose<React.ComponentType>(connect<mapStateToPropsType, mapDispatchToPropsType, {}, ReducerType>(mapStateToProps, mapDispatchToProps))(MyPosts);
+// const MyPostsContainer = connect<mapStateToPropsType,mapDispatchToPropsType,{},ReducerType >(mapStateToProps, mapDispatchToProps)(MyPosts);
+// export default MyPostsContainer;

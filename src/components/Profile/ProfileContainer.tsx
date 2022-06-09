@@ -52,5 +52,5 @@ export default compose<React.ComponentType>(
         {getUserProfile: getUserProfileTC}
     ),
     withRouter,
-    withAuthRedirect
+    // withAuthRedirect
 )(ProfileContainer);
