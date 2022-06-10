@@ -34,14 +34,19 @@ export type ProfileType = {
 export type ProfilePageType = {
     postData: PostDataType[],
     newPostText: string,
-    profile: ProfileType | null
+    profile: ProfileType | null,
+    status: string
 }
 
-export type ProfileActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewTextActionCreator> | ReturnType<typeof setUserProfileAC>
+export type ProfileActionType = ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewTextActionCreator>
+    | ReturnType<typeof setUserProfileAC>
+    | ReturnType<typeof setStatusAC>
 
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
+const SET_STATUS = 'SET-STATUS';
 
 let initialState = {
     postData: [
@@ -49,7 +54,8 @@ let initialState = {
         {id: 2, message: 'My first post', likeCount: 15},
     ],
     newPostText: '',
-    profile: null
+    profile: null,
+    status: ''
 };
 
 const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
@@ -75,6 +81,11 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
                 ...state,
                 profile: action.profile
             };
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            };
         default:
             return state;
     }
@@ -96,11 +107,34 @@ export const setUserProfileAC= (profile: ProfileType) => {
     } as const;
 };
 
+export const setStatusAC= (status: string) => {
+    return {
+        type: SET_STATUS,
+        status
+    } as const;
+};
+
 export const getUserProfileTC=(userId:number):AppThunk=>(dispatch)=>{
     ProfileAPI.getProfile(userId)
         .then(data => {
         dispatch(setUserProfileAC(data));
     });
+}
+
+export const setStatusTC=(userId:number):AppThunk=>(dispatch)=>{
+    ProfileAPI.getStatus(userId)
+        .then(data => {
+            dispatch(setStatusAC(data));
+        });
+}
+
+export const updateStatusTC=(status:string):AppThunk=>(dispatch)=>{
+    ProfileAPI.updateStatus(status)
+        .then(data => {
+            if(data.resultCode === 0) {
+                dispatch(setStatusAC(status));
+            }
+        });
 }
 
 export default ProfileReducer;

@@ -6,7 +6,9 @@ import {ProfileType} from '../../../redux/profile-reducer';
 import ProfileStatus from './ProfileStatus'
 
 export type ProfileInfoType = {
-    profile: ProfileType
+    profile: ProfileType,
+    status: string,
+    updateStatus:(status: string)=>void
 }
 
 const ProfileInfo = (props:ProfileInfoType): JSX.Element => {
@@ -23,7 +25,7 @@ const ProfileInfo = (props:ProfileInfoType): JSX.Element => {
                 {/*<div> NAME:  {props.profile.fullName}</div>*/}
                 {/*<div>About me: {props.profile.aboutMe}</div>*/}
                 {/*<div>Slogan: {props.profile.lookingForAJobDescription}</div>*/}
-                <ProfileStatus status={'Hello my friend'}/>
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
             </div>
 
 
