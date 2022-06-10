@@ -6,6 +6,7 @@ import SitebarReducer from './sitebar-reducer';
 import UsersReducer, {UserActionType} from './users-reducer';
 import AuthReducer, {AuthActionType} from './auth-reducer';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
+import {reducer as formReducer} from 'redux-form';
 
 let rootReducer = combineReducers({
     profilePage: ProfileReducer,
@@ -13,6 +14,7 @@ let rootReducer = combineReducers({
     siteBar: SitebarReducer,
     usersPage: UsersReducer,
     auth:AuthReducer,
+    form: formReducer
 
 })
 
