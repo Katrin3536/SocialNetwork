@@ -8,7 +8,6 @@ export type PostDataType = {
     likeCount: number,
 }
 
-
 export type ProfileType = {
     aboutMe:string
     userId: number
@@ -33,17 +32,14 @@ export type ProfileType = {
 
 export type ProfilePageType = {
     postData: PostDataType[],
-    newPostText: string,
     profile: ProfileType | null,
-    status: string
+    status: string,
 }
 
 export type ProfileActionType = ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewTextActionCreator>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setStatusAC>
 
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_STATUS = 'SET-STATUS';
@@ -53,7 +49,6 @@ let initialState = {
         {id: 1, message: 'Hi! How are you?', likeCount: 10},
         {id: 2, message: 'My first post', likeCount: 15},
     ],
-    newPostText: '',
     profile: null,
     status: ''
 };
@@ -63,18 +58,12 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
         case ADD_POST:
             let newPost: PostDataType = {
                 id: new Date().getTime(),
-                message: state.newPostText,
+                message: action.newPostText,
                 likeCount: 0,
             };
             return {
                 ...state,
                 postData: [...state.postData, newPost],
-                newPostText: ''
-            };
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
             };
         case SET_USER_PROFILE:
             return {
@@ -90,16 +79,10 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
             return state;
     }
 };
-export const addPostActionCreator = () => {
-    return {type: ADD_POST} as const;
+export const addPostActionCreator = (newPostText:string) => {
+    return {type: ADD_POST, newPostText} as const;
 };
 
-export const updateNewTextActionCreator = (newText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
-    } as const;
-};
 export const setUserProfileAC= (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE,

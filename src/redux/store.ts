@@ -1,5 +1,5 @@
-import dialogReducer, {sendMessageActionCreator, updateNewMessageBodyActionCreator} from './dialog-reducer';
-import profileReducer, {addPostActionCreator, updateNewTextActionCreator} from './profile-reducer';
+import dialogReducer, {sendMessageActionCreator} from './dialog-reducer';
+import profileReducer, {addPostActionCreator} from './profile-reducer';
 import sitebarReducer from './sitebar-reducer';
 
 // export type FriendType = {
