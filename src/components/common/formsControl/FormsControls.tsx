@@ -24,7 +24,7 @@ export const Textarea: React.FC<TextareaType> = ({input, meta, ...props}) => {
     );
 };
 
-type DefaultInputPropsType =  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 type InputType = {
     input: DefaultInputPropsType
