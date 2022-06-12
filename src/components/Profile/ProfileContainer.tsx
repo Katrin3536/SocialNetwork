@@ -6,6 +6,7 @@ import {getUserProfileTC, ProfileType, setStatusTC, updateStatusTC} from '../../
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Preloader} from '../common/preloader/Preloader';
 import {compose} from 'redux';
+import {getId, getIsAuth, getProfile, getStatus} from '../../redux/profile-selectors';
 
 export type PathParamsType = {
     userId: string
@@ -13,7 +14,9 @@ export type PathParamsType = {
 
 export type MapStateToPropsType = {
     profile: ProfileType | null,
-    status: string
+    status: string,
+    isAuth:boolean,
+    id: number | null
 }
 
 export type MapDispatchToPropsType = {
@@ -29,9 +32,12 @@ export type ProfileContainerPropsType = OwnPropsType & RouteComponentProps<PathP
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType, ReducerType> {
     componentDidMount() {
-        let userId = +this.props.match.params.userId;
+        let userId= +this.props.match.params.userId;
         if (!userId) {
-            userId = 2;
+            userId = this.props.id as number
+            if(!userId) {
+                this.props.history.push('/login')
+            }
         }
         this.props.getUserProfile(userId);
         this.props.setStatus(userId);
@@ -47,8 +53,10 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType, Reduce
 };
 
 let mapStateToProps = (state: ReducerType): MapStateToPropsType => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
+    profile: getProfile(state),
+    status: getStatus(state),
+    id:getId(state),
+    isAuth: getIsAuth(state),
 });
 
 export default compose<React.ComponentType>(

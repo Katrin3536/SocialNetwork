@@ -9,10 +9,6 @@ export type UsersType = {
     followed: boolean,
     name: string,
     status: string,
-    // location: {
-    //     city: string,
-    //     country: string
-    // }
 }
 
 export type UsersPageType = {
@@ -119,10 +115,11 @@ export const toggleFollowingProgressAC = (isFetching: boolean, userId: number) =
     } as const;
 };
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number): AppThunk => {
+export const getUsersThunkCreator = (page: number, pageSize: number): AppThunk => {
     return (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
-        UsersAPI.getUsers(currentPage, pageSize).then(data => {
+        dispatch(setCurrentPageAC(page))
+        UsersAPI.getUsers(page, pageSize).then(data => {
             dispatch(toggleIsFetchingAC(false));
             dispatch(setUsersAC(data.items));
             dispatch(setTotalCountAC(data.totalCount));

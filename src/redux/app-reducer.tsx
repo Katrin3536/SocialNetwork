@@ -1,76 +1,43 @@
 import React from 'react';
-import {AuthAPI} from '../api/api';
-import { AppThunk} from './redux-store';
-import {stopSubmit} from 'redux-form';
+import {getAuthUserDataTC} from './auth-reducer';
+import {AppThunk} from './redux-store';
+import {MyResponseType} from '../api/api';
 
-export type AuthType = {
-    id: number | null
-    email: string | null,
-    login: string | null,
-    isAuth:boolean
+export type AppReducerType = {
+    initialized: boolean
 }
 
-export type AuthActionType = ReturnType<typeof setAuthUserDataAC>
+export type AppActionType = ReturnType<typeof initializedSuccesAC>
 
-const SET_USER_DATA = 'SET-USER-DATA';
+const INITIALIZED_SUCCESS = 'INITIALIZED-SUCCESS';
 
 let initialState = {
-    id: null,
-    email: null,
-    login: null,
-    isAuth:false
+    initialized: false
 };
 
-const AuthReducer = (state: AuthType = initialState, action: AuthActionType): AuthType => {
+const AppReducer = (state: AppReducerType = initialState, action: AppActionType): AppReducerType => {
     switch (action.type) {
-        case SET_USER_DATA:
+        case INITIALIZED_SUCCESS:
             return {
                 ...state,
-                ...action.payload,
+                initialized: true,
             };
         default:
             return state;
     }
 };
 
-export const setAuthUserDataAC= (id: number | null,email: string | null ,login: string | null, isAuth:boolean) => {
+export const initializedSuccesAC = () => {
     return {
-        type: SET_USER_DATA,
-        payload: {
-            id,
-            email,
-            login,
-            isAuth
-        }
+        type: INITIALIZED_SUCCESS,
     } as const;
 };
 
-export const getAuthUserDataTC=():AppThunk=>(dispatch)=>{
-    AuthAPI.getAuth().then(data => {
-        if (data.resultCode === 0) {
-            let {id, email, login} = data.data;
-            dispatch(setAuthUserDataAC(id, email, login,true));
-        }
+export const initializeAppTC = (): AppThunk => (dispatch) => {
+    let promise = dispatch(getAuthUserDataTC())
+    promise.then(() => {
+        dispatch(initializedSuccesAC());
     });
-}
+};
 
-export const loginTC=(email:string, password:string,rememberMe:boolean):AppThunk=>(dispatch)=>{
-    AuthAPI.login(email,password,rememberMe).then(data => {
-        if (data.resultCode === 0) {
-            dispatch(getAuthUserDataTC());
-        } else {
-            let message:string = data.messages.length>0 ? data.messages[0]: "some error"
-            dispatch(stopSubmit('login', {_error:message}))
-        }
-    });
-}
-
-export const logoutTC=():AppThunk=>(dispatch)=>{
-    AuthAPI.logout().then(data => {
-        if (data.resultCode === 0) {
-            dispatch(setAuthUserDataAC(null, null, null,true))
-        }
-    });
-}
-
-export default AuthReducer;
+export default AppReducer;
