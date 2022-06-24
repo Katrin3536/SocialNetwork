@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/samurai-way-main/static/css/main.9cebfbfc.css",
+    "main.js": "/samurai-way-main/static/js/main.d104b9be.js",
+    "static/media/Cappadocia_2.jpg": "/samurai-way-main/static/media/Cappadocia_2.a9de05dec6fdb2947bfb.jpg",
+    "static/media/loading-2.gif": "/samurai-way-main/static/media/loading-2.d944122cbaa2f441e1b7.gif",
+    "static/media/cat.jpg": "/samurai-way-main/static/media/cat.635a9fb09bf4880b1132.jpg",
+    "static/media/avatarIcon.jpg": "/samurai-way-main/static/media/avatarIcon.e5117e8e0cea57c9a92f.jpg",
+    "static/media/symbol-of-peace-vector.jpg": "/samurai-way-main/static/media/symbol-of-peace-vector.5597afca70a02dbb7c49.jpg",
+    "index.html": "/samurai-way-main/index.html",
+    "main.9cebfbfc.css.map": "/samurai-way-main/static/css/main.9cebfbfc.css.map",
+    "main.d104b9be.js.map": "/samurai-way-main/static/js/main.d104b9be.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9cebfbfc.css",
+    "static/js/main.d104b9be.js"
+  ]
+}
