@@ -5,7 +5,7 @@ export type ProfileStatusType = {
     updateStatus: (status: string) => void
 }
 
-export const ProfileStatusWithHooks = (props: ProfileStatusType) => {
+export const ProfileStatusWithHooks:React.FC<ProfileStatusType> = (props ) => {
     let [editMode, setEditMode] = useState<boolean>(false);
     let [status, setStatus] = useState<string>(props.status);
 

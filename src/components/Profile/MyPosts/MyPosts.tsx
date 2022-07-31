@@ -4,7 +4,7 @@ import Post from './Posts/Post';
 import {MyPostType} from './MyPostsContainer';
 import {AddNewPostFormRedux, FormDataType} from './AddNewPostForm/AddNewPostForm';
 
-const MyPosts = (props: MyPostType): JSX.Element => {
+const MyPosts = React.memo((props: MyPostType): JSX.Element => {
 
     let postElement: JSX.Element[] = props.postData.map(post => <Post key={post.id} message={post.message}
                                                                       likeCount={post.likeCount}/>);
@@ -21,6 +21,6 @@ const MyPosts = (props: MyPostType): JSX.Element => {
             </div>
         </div>
     );
-};
+});
 
 export default MyPosts;

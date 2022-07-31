@@ -6,7 +6,7 @@ import Message from './Message/Message';
 import {AddMessageFormRedux, FormDataType} from './AddMessageForm/AddMessageForm';
 
 
-const Dialogs = (props: DialogsType): JSX.Element => {
+const Dialogs = React.memo((props: DialogsType): JSX.Element => {
 
     let dialogsItemElements: JSX.Element[] = props.dialogPage.dialogs.map(dialog => <DialogsItem key={dialog.id}
                                                                                                  name={dialog.name}
@@ -29,7 +29,7 @@ const Dialogs = (props: DialogsType): JSX.Element => {
             <AddMessageFormRedux onSubmit={addNewMessage}/>
         </div>
     );
-};
+});
 
 
 export default Dialogs;
