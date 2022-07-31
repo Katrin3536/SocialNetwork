@@ -6,6 +6,7 @@
     width: 50px;
     margin-top: 5px;
     margin-left: 5px;
+    border-radius: 50%;
 }
 .loginBlock{
     float: right;
