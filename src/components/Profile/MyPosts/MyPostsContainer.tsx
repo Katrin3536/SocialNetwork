@@ -1,9 +1,6 @@
 import React from 'react';
 import MyPosts from './MyPosts';
-import {
-    addPostActionCreator,
-    PostDataType,
-} from '../../../redux/profile-reducer';
+import {addPostActionCreator, deletePostActionCreator, PostDataType,} from '../../../redux/profile-reducer';
 import {ReducerType} from '../../../redux/redux-store';
 import {connect} from 'react-redux';
 import {compose, Dispatch} from 'redux';
@@ -15,7 +12,8 @@ export type mapStateToPropsType = {
 }
 
 export type mapDispatchToPropsType = {
-    addPost: (newPostText:string) => void
+    addPost: (newPostText:string) => void,
+    deletePost:(idPost:number)=>void
 }
 
 export type MyPostType = mapDispatchToPropsType & mapStateToPropsType
@@ -26,10 +24,13 @@ let mapStateToProps = (state: ReducerType): mapStateToPropsType => {
     };
 };
 
-let mapDispatchToProps = (dispatch: Dispatch): mapDispatchToPropsType => {
+let mapDispatchToProps = (dispatch: Dispatch): { deletePost: (id: number) => void; addPost: (newPostText: string) => void } => {
     return {
         addPost: (newPostText:string) => {
             dispatch(addPostActionCreator(newPostText));
+        },
+        deletePost: (idPost:number) => {
+            dispatch(deletePostActionCreator(idPost));
         }
     };
 };

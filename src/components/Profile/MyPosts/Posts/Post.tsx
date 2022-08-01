@@ -1,10 +1,11 @@
 import React from 'react';
 import s from './Post.module.css';
-import picture from '../../../../assets/images/cat.jpg'
+import picture from '../../../../assets/images/cat.jpg';
 
 type PostType = {
     message: string;
     likeCount: number;
+    deletePost:()=>void
 }
 
 const Post = (props:PostType): JSX.Element => {
@@ -16,6 +17,7 @@ const Post = (props:PostType): JSX.Element => {
                 <div>
                     <span>Like{props.likeCount}</span>
                 </div>
+                <button onClick={props.deletePost}>Delete post</button>
             </div>
         </div>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ProfileAPI} from '../api/api';
-import { AppThunk} from './redux-store';
+import {AppThunk} from './redux-store';
 
 export type PostDataType = {
     id: number,
@@ -9,7 +9,7 @@ export type PostDataType = {
 }
 
 export type ProfileType = {
-    aboutMe:string
+    aboutMe: string
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
@@ -39,10 +39,12 @@ export type ProfilePageType = {
 export type ProfileActionType = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setStatusAC>
+    | ReturnType<typeof deletePostActionCreator>
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET-USER-PROFILE';
 const SET_STATUS = 'SET-STATUS';
+const DELETE_POST = 'DELETE-POST'
 
 let initialState = {
     postData: [
@@ -65,6 +67,8 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
                 ...state,
                 postData: [...state.postData, newPost],
             };
+        case 'DELETE-POST':
+            return {...state, postData:state.postData.filter((post)=>post.id!==action.idPost) }
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -79,45 +83,48 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
             return state;
     }
 };
-export const addPostActionCreator = (newPostText:string) => {
+export const addPostActionCreator = (newPostText: string) => {
     return {type: ADD_POST, newPostText} as const;
 };
+export const deletePostActionCreator = (idPost: number) => {
+    return {type: DELETE_POST, idPost} as const;
+};
 
-export const setUserProfileAC= (profile: ProfileType) => {
+export const setUserProfileAC = (profile: ProfileType) => {
     return {
         type: SET_USER_PROFILE,
         profile
     } as const;
 };
 
-export const setStatusAC= (status: string) => {
+export const setStatusAC = (status: string) => {
     return {
         type: SET_STATUS,
         status
     } as const;
 };
 
-export const getUserProfileTC=(userId:number):AppThunk=>(dispatch)=>{
+export const getUserProfileTC = (userId: number): AppThunk => (dispatch) => {
     ProfileAPI.getProfile(userId)
         .then(data => {
-        dispatch(setUserProfileAC(data));
-    });
-}
+            dispatch(setUserProfileAC(data));
+        });
+};
 
-export const setStatusTC=(userId:number):AppThunk=>(dispatch)=>{
+export const setStatusTC = (userId: number): AppThunk => (dispatch) => {
     ProfileAPI.getStatus(userId)
         .then(data => {
             dispatch(setStatusAC(data));
         });
-}
+};
 
-export const updateStatusTC=(status:string):AppThunk=>(dispatch)=>{
+export const updateStatusTC = (status: string): AppThunk => (dispatch) => {
     ProfileAPI.updateStatus(status)
         .then(data => {
-            if(data.resultCode === 0) {
+            if (data.resultCode === 0) {
                 dispatch(setStatusAC(status));
             }
         });
-}
+};
 
 export default ProfileReducer;
