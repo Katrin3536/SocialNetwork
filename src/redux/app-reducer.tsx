@@ -1,7 +1,6 @@
 import React from 'react';
 import {getAuthUserDataTC} from './auth-reducer';
 import {AppThunk} from './redux-store';
-import {MyResponseType} from '../api/api';
 
 export type AppReducerType = {
     initialized: boolean

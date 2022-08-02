@@ -65,7 +65,7 @@ test('after deleting length of messages should not be decremented if id incorrec
     expect(newState.postData.length).toBe(2);
 });
 
-test('Profile is setted success', () => {
+test('Profile is set success', () => {
 
     let newProfile: ProfileType = {
         aboutMe: 'Hello',

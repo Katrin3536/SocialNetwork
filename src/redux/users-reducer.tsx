@@ -1,6 +1,6 @@
 import React from 'react';
 import {UsersAPI} from '../api/api';
-import { AppThunk} from './redux-store';
+import {AppThunk} from './redux-store';
 
 
 export type UsersType = {
@@ -64,7 +64,7 @@ const UsersReducer = (state: UsersPageType = initialState, action: UserActionTyp
             return {
                 ...state, followingInProgress: action.isFetching
                     ? [...state.followingInProgress, action.userId]
-                    : state.followingInProgress.filter(id => id != action.userId)
+                    : state.followingInProgress.filter(id => id !== action.userId)
             };
         default:
             return state;
