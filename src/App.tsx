@@ -14,16 +14,18 @@ import {connect} from 'react-redux';
 import {ReducerType} from './redux/redux-store';
 import {compose} from 'redux';
 import {initializeAppTC} from './redux/app-reducer';
-import { Preloader } from './components/common/preloader/Preloader';
+import {Preloader} from './components/common/preloader/Preloader';
 
 class App extends React.Component<AppPropsType, ReducerType> {
     componentDidMount() {
         this.props.initializeApp();
     }
+
     render() {
         if (!this.props.initialized) {
-            return <Preloader/>
+            return <Preloader/>;
         }
+
         return (
             <div className="app-wrapper">
                 <HeaderContainer/>
@@ -43,7 +45,6 @@ class App extends React.Component<AppPropsType, ReducerType> {
 }
 
 export type AppPropsType = mapDispatchToPropsType & mapStateToPropsType
-
 
 export type mapDispatchToPropsType = {
     initializeApp: () => void,

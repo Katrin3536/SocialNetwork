@@ -41,10 +41,10 @@ export type ProfileActionType = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof deletePostActionCreator>
 
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET-USER-PROFILE';
-const SET_STATUS = 'SET-STATUS';
-const DELETE_POST = 'DELETE-POST'
+const ADD_POST = 'profile/ADD-POST';
+const SET_USER_PROFILE = 'profile/SET-USER-PROFILE';
+const SET_STATUS = 'profile/SET-STATUS';
+const DELETE_POST = 'profile/DELETE-POST'
 
 let initialState = {
     postData: [
@@ -67,7 +67,7 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
                 ...state,
                 postData: [...state.postData, newPost],
             };
-        case 'DELETE-POST':
+        case DELETE_POST:
             return {...state, postData:state.postData.filter((post)=>post.id!==action.idPost) }
         case SET_USER_PROFILE:
             return {
@@ -104,27 +104,21 @@ export const setStatusAC = (status: string) => {
     } as const;
 };
 
-export const getUserProfileTC = (userId: number): AppThunk => (dispatch) => {
-    ProfileAPI.getProfile(userId)
-        .then(data => {
+export const getUserProfileTC = (userId: number): AppThunk => async(dispatch) => {
+    let data = await ProfileAPI.getProfile(userId)
             dispatch(setUserProfileAC(data));
-        });
 };
 
-export const setStatusTC = (userId: number): AppThunk => (dispatch) => {
-    ProfileAPI.getStatus(userId)
-        .then(data => {
+export const setStatusTC = (userId: number): AppThunk => async(dispatch) => {
+   let data= await ProfileAPI.getStatus(userId)
             dispatch(setStatusAC(data));
-        });
 };
 
-export const updateStatusTC = (status: string): AppThunk => (dispatch) => {
-    ProfileAPI.updateStatus(status)
-        .then(data => {
+export const updateStatusTC = (status: string): AppThunk => async (dispatch) => {
+    let data = await ProfileAPI.updateStatus(status)
             if (data.resultCode === 0) {
                 dispatch(setStatusAC(status));
             }
-        });
 };
 
 export default ProfileReducer;

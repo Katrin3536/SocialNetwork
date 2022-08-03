@@ -1,6 +1,6 @@
 import React from 'react';
-import boy from '../assets/images/boyImage.png'
-import girl from '../assets/images/girlImage.jpg'
+import boy from '../assets/images/boyImage.png';
+import girl from '../assets/images/girlImage.jpg';
 
 export type MessageDataType = {
     id: number,
@@ -20,7 +20,7 @@ export type DialogPageType = {
 
 export type DialogActionType = ReturnType<typeof sendMessageActionCreator>
 
-const SEND_MESSAGE = 'SEND-MESSAGE';
+const SEND_MESSAGE = 'dialog/SEND-MESSAGE';
 
 let initialState = {
     dialogs: [
@@ -64,7 +64,7 @@ let initialState = {
 
 const DialogReducer = (state: DialogPageType = initialState, action: DialogActionType): DialogPageType => {
     switch (action.type) {
-        case 'SEND-MESSAGE':
+        case SEND_MESSAGE:
             let body = action.newMessageBody;
             return {
                 ...state,

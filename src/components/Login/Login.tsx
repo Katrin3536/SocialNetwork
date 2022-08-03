@@ -14,15 +14,15 @@ export type FormDataType = {
     rememberMe: boolean
 }
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit,error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div><Field component={Input} validate={[required]} name={'email'} placeholder={'email'}/></div>
             <div><Field component={Input} type="password" validate={[required]} name={'password'}
                         placeholder={'Password'}/></div>
             <div><Field component={Input} name={'rememberMe'} type="checkbox"/>remember me</div>
-            {props.error && <div className={s.formSummaryError}>
-                {props.error}
+            {error && <div className={s.formSummaryError}>
+                {error}
             </div>}
             <div>
                 <button>login</button>
@@ -33,11 +33,11 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm);
 
-const Login = (props: LoginPropsType) => {
+const Login:React.FC<LoginPropsType> = ({login, isAuth}) => {
     const onSubmit = (formData: FormDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe);
+        login(formData.email, formData.password, formData.rememberMe);
     };
-    if (props.isAuth) {
+    if (isAuth) {
         return <Redirect to={'/profile'}/>;
     }
     return <div>

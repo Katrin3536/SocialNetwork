@@ -29,13 +29,13 @@ export type UserActionType = ReturnType<typeof followSuccessAC>
     | ReturnType<typeof toggleIsFetchingAC>
     | ReturnType<typeof toggleFollowingProgressAC>
 
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS';
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
-const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
-const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE-IS-FOLLOWING-PROGRESS';
+const FOLLOW = 'users/FOLLOW';
+const UNFOLLOW = 'users/UNFOLLOW';
+const SET_USERS = 'users/SET-USERS';
+const SET_CURRENT_PAGE = 'users/SET-CURRENT-PAGE';
+const SET_TOTAL_COUNT = 'users/SET-TOTAL-COUNT';
+const TOGGLE_IS_FETCHING = 'users/TOGGLE-IS-FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'users/TOGGLE-IS-FOLLOWING-PROGRESS';
 
 let initialState = {
     users: [],
@@ -116,38 +116,36 @@ export const toggleFollowingProgressAC = (isFetching: boolean, userId: number) =
 };
 
 export const getUsersThunkCreator = (page: number, pageSize: number): AppThunk => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true));
-        dispatch(setCurrentPageAC(page))
-        UsersAPI.getUsers(page, pageSize).then(data => {
-            dispatch(toggleIsFetchingAC(false));
-            dispatch(setUsersAC(data.items));
-            dispatch(setTotalCountAC(data.totalCount));
-        });
+        dispatch(setCurrentPageAC(page));
+
+        let data = await UsersAPI.getUsers(page, pageSize);
+        dispatch(toggleIsFetchingAC(false));
+        dispatch(setUsersAC(data.items));
+        dispatch(setTotalCountAC(data.totalCount));
     };
 };
 
 export const unfollow = (id: number): AppThunk => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleFollowingProgressAC(true, id));
-        UsersAPI.deleteUsers(id).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(unfollowSuccessAC(id));
-            }
-            dispatch(toggleFollowingProgressAC(false, id));
-        });
+        let data = await UsersAPI.deleteUsers(id);
+        if (data.resultCode === 0) {
+            dispatch(unfollowSuccessAC(id));
+        }
+        dispatch(toggleFollowingProgressAC(false, id));
     };
 };
 
 export const follow = (id: number): AppThunk => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleFollowingProgressAC(true, id));
-        UsersAPI.postUsers(id).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(followSuccessAC(id));
-            }
-            dispatch(toggleFollowingProgressAC(false, id));
-        });
+        let data = await UsersAPI.postUsers(id);
+        if (data.resultCode === 0) {
+            dispatch(followSuccessAC(id));
+        }
+        dispatch(toggleFollowingProgressAC(false, id));
     };
 };
 

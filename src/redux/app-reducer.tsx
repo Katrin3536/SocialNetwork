@@ -8,7 +8,7 @@ export type AppReducerType = {
 
 export type AppActionType = ReturnType<typeof initializedSuccesAC>
 
-const INITIALIZED_SUCCESS = 'INITIALIZED-SUCCESS';
+const INITIALIZED_SUCCESS = 'app/INITIALIZED-SUCCESS';
 
 let initialState = {
     initialized: false
