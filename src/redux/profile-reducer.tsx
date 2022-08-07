@@ -24,10 +24,7 @@ export type ProfileType = {
         youtube: string
         mainLink: string
     }
-    photos: {
-        small: string
-        large: string
-    }
+    photos: PhotosType
 }
 
 export type ProfilePageType = {
@@ -40,11 +37,18 @@ export type ProfileActionType = ReturnType<typeof addPostActionCreator>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof deletePostActionCreator>
+    | ReturnType<typeof savePhotoAC>
+
+export type PhotosType = {
+    large: string,
+    small: string
+}
 
 const ADD_POST = 'profile/ADD-POST';
 const SET_USER_PROFILE = 'profile/SET-USER-PROFILE';
 const SET_STATUS = 'profile/SET-STATUS';
-const DELETE_POST = 'profile/DELETE-POST'
+const DELETE_POST = 'profile/DELETE-POST';
+const SAVE_PHOTO = 'profile/SAVE-PHOTO';
 
 let initialState = {
     postData: [
@@ -68,7 +72,7 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
                 postData: [...state.postData, newPost],
             };
         case DELETE_POST:
-            return {...state, postData:state.postData.filter((post)=>post.id!==action.idPost) }
+            return {...state, postData: state.postData.filter((post) => post.id !== action.idPost)};
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -78,6 +82,11 @@ const ProfileReducer = (state: ProfilePageType = initialState, action: ProfileAc
             return {
                 ...state,
                 status: action.status
+            };
+        case SAVE_PHOTO:
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos} as ProfileType
             };
         default:
             return state;
@@ -104,21 +113,35 @@ export const setStatusAC = (status: string) => {
     } as const;
 };
 
-export const getUserProfileTC = (userId: number): AppThunk => async(dispatch) => {
-    let data = await ProfileAPI.getProfile(userId)
-            dispatch(setUserProfileAC(data));
+export const savePhotoAC = (photos: PhotosType) => {
+    return {
+        type: SAVE_PHOTO,
+        photos
+    } as const;
 };
 
-export const setStatusTC = (userId: number): AppThunk => async(dispatch) => {
-   let data= await ProfileAPI.getStatus(userId)
-            dispatch(setStatusAC(data));
+export const getUserProfileTC = (userId: number): AppThunk => async (dispatch) => {
+    let data = await ProfileAPI.getProfile(userId);
+    dispatch(setUserProfileAC(data));
+};
+
+export const setStatusTC = (userId: number): AppThunk => async (dispatch) => {
+    let data = await ProfileAPI.getStatus(userId);
+    dispatch(setStatusAC(data));
 };
 
 export const updateStatusTC = (status: string): AppThunk => async (dispatch) => {
-    let data = await ProfileAPI.updateStatus(status)
-            if (data.resultCode === 0) {
-                dispatch(setStatusAC(status));
-            }
+    let data = await ProfileAPI.updateStatus(status);
+    if (data.resultCode === 0) {
+        dispatch(setStatusAC(status));
+    }
+};
+
+export const savePhotoTC = (file: File): AppThunk => async (dispatch) => {
+    let data = await ProfileAPI.savePhoto(file);
+    if (data.resultCode === 0) {
+        dispatch(savePhotoAC(data.data.photos));
+    }
 };
 
 export default ProfileReducer;
