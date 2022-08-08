@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ProfileType} from '../redux/profile-reducer';
+import {PhotosType, ProfileType} from '../redux/profile-reducer';
 import {UsersType} from '../redux/users-reducer';
 
 export type MyResponseType = {
@@ -18,6 +18,29 @@ export type MyResponsePhotoType = {
     data: {
         small: string,
         large: string
+    }
+}
+
+export type MyResponseProfileType = {
+    resultCode: number
+    messages: Array<string>,
+    data: {
+        aboutMe: string
+        userId: number
+        lookingForAJob: boolean
+        lookingForAJobDescription: string
+        fullName: string
+        contacts: {
+            github: string
+            vk: string
+            facebook: string
+            instagram: string
+            twitter: string
+            website: string
+            youtube: string
+            mainLink: string
+        }
+        photos: PhotosType
     }
 }
 
@@ -72,7 +95,19 @@ export const ProfileAPI = {
     savePhoto(file: File) {
         let formData = new FormData();
         formData.append('image', file);
-        return instance.put<any>(`/profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        return instance.put<MyResponsePhotoType>(`/profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+            .then(response => response.data);
+    },
+    saveProfile(fullName: string,
+                lookingForAJob: boolean,
+                lookingForAJobDescription: string,
+                aboutMe: string) {
+        return instance.put<MyResponseProfileType>(`/profile`, {
+            fullName,
+            lookingForAJob,
+            lookingForAJobDescription,
+            aboutMe
+        })
             .then(response => response.data);
     }
 };

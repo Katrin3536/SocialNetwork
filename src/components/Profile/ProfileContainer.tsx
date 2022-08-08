@@ -2,7 +2,14 @@ import React from 'react';
 import {ReducerType} from '../../redux/redux-store';
 import Profile from './Profile';
 import {connect} from 'react-redux';
-import {getUserProfileTC, ProfileType, savePhotoTC, setStatusTC, updateStatusTC} from '../../redux/profile-reducer';
+import {
+    getUserProfileTC,
+    ProfileType,
+    savePhotoTC,
+    saveProfileTC,
+    setStatusTC,
+    updateStatusTC
+} from '../../redux/profile-reducer';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Preloader} from '../common/preloader/Preloader';
 import {compose} from 'redux';
@@ -23,8 +30,11 @@ export type MapDispatchToPropsType = {
     getUserProfile: (userId: number) => void,
     setStatus: (userId: number) => void,
     updateStatus: (status: string) => void,
-    savePhoto: (file: File) => void
-
+    savePhoto: (file: File) => void,
+    saveProfile:(fullName: string,
+                 lookingForAJob: boolean,
+                 lookingForAJobDescription: string,
+                 aboutMe: string) => void
 }
 export type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -58,7 +68,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType, Reduce
             ? <Preloader/>
             : <div>
                 <Profile profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}
-                         isOwner={!this.props.match.params.userId} savePhoto={this.props.savePhoto}/>
+                         isOwner={!this.props.match.params.userId} savePhoto={this.props.savePhoto} saveProfile={this.props.saveProfile}/>
             </div>;
     }
 };
@@ -77,7 +87,8 @@ export default compose<React.ComponentType>(
             getUserProfile: getUserProfileTC,
             setStatus: setStatusTC,
             updateStatus: updateStatusTC,
-            savePhoto: savePhotoTC
+            savePhoto: savePhotoTC,
+            saveProfile: saveProfileTC
         }
     ),
     withRouter,

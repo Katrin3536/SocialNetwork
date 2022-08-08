@@ -120,6 +120,7 @@ export const savePhotoAC = (photos: PhotosType) => {
     } as const;
 };
 
+
 export const getUserProfileTC = (userId: number): AppThunk => async (dispatch) => {
     let data = await ProfileAPI.getProfile(userId);
     dispatch(setUserProfileAC(data));
@@ -140,7 +141,18 @@ export const updateStatusTC = (status: string): AppThunk => async (dispatch) => 
 export const savePhotoTC = (file: File): AppThunk => async (dispatch) => {
     let data = await ProfileAPI.savePhoto(file);
     if (data.resultCode === 0) {
-        dispatch(savePhotoAC(data.data.photos));
+        dispatch(savePhotoAC(data.data));
+    }
+};
+
+export const saveProfileTC = (fullName: string,
+                              lookingForAJob: boolean,
+                              lookingForAJobDescription: string,
+                              aboutMe: string): AppThunk => async (dispatch,getState) => {
+    const userId = getState().auth.id
+    let data = await ProfileAPI.saveProfile(fullName, lookingForAJob, lookingForAJobDescription, aboutMe);
+    if (data.resultCode === 0) {
+        dispatch(getUserProfileTC(userId as number));
     }
 };
 

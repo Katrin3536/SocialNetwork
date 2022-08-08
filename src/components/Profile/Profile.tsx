@@ -8,14 +8,17 @@ export type PropsType = {
     status: string,
     updateStatus:(status: string)=>void;
     isOwner:boolean;
-    savePhoto:(value:File)=>void
-
+    savePhoto:(value:File)=>void;
+    saveProfile: (fullName: string,
+                  lookingForAJob: boolean,
+                  lookingForAJobDescription: string,
+                  aboutMe: string) => void
 }
 
 const Profile: React.FC<PropsType> = (props) => {
     return (
         <div>
-           <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} savePhoto={props.savePhoto}/>
+           <ProfileInfo profile={props.profile} saveProfile = {props.saveProfile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} savePhoto={props.savePhoto}/>
             <MyPostsContainer
             />
         </div>
