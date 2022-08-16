@@ -3,6 +3,7 @@ import {ReducerType} from '../../redux/redux-store';
 import Profile from './Profile';
 import {connect} from 'react-redux';
 import {
+    ContactsType,
     getUserProfileTC,
     ProfileType,
     savePhotoTC,
@@ -34,7 +35,8 @@ export type MapDispatchToPropsType = {
     saveProfile:(fullName: string,
                  lookingForAJob: boolean,
                  lookingForAJobDescription: string,
-                 aboutMe: string) => void
+                 aboutMe: string,
+                 contacts:ContactsType)=> void
 }
 export type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType
 

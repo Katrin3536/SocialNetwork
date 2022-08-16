@@ -1,6 +1,7 @@
 import React from 'react';
 import {ProfileAPI} from '../api/api';
 import {AppThunk} from './redux-store';
+import {stopSubmit} from 'redux-form';
 
 export type PostDataType = {
     id: number,
@@ -14,17 +15,19 @@ export type ProfileType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
-    }
+    contacts: ContactsType
     photos: PhotosType
+}
+
+export type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
 }
 
 export type ProfilePageType = {
@@ -148,11 +151,15 @@ export const savePhotoTC = (file: File): AppThunk => async (dispatch) => {
 export const saveProfileTC = (fullName: string,
                               lookingForAJob: boolean,
                               lookingForAJobDescription: string,
-                              aboutMe: string): AppThunk => async (dispatch,getState) => {
-    const userId = getState().auth.id
-    let data = await ProfileAPI.saveProfile(fullName, lookingForAJob, lookingForAJobDescription, aboutMe);
+                              aboutMe: string, contacts: ContactsType): AppThunk => async (dispatch, getState) => {
+    const userId = getState().auth.id;
+    let data = await ProfileAPI.saveProfile(fullName, lookingForAJob, lookingForAJobDescription, aboutMe, contacts);
     if (data.resultCode === 0) {
         dispatch(getUserProfileTC(userId as number));
+    } else {
+        let message: string = data.messages.length > 0 ? data.messages[0] : 'some error';
+        dispatch(stopSubmit('edit-profile', {_error: message}));
+        return Promise.reject(message);
     }
 };
 

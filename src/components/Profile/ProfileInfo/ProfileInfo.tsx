@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileInfo.module.css';
 import picture from '../../../assets/images/Cappadocia_2.jpg';
 import {Preloader} from '../../common/preloader/Preloader';
-import {ProfileType} from '../../../redux/profile-reducer';
+import {ContactsType, ProfileType} from '../../../redux/profile-reducer';
 import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
 import photo from '../../../assets/images/avatarIcon.jpg';
 import ProfileDataForm, {ProfileDataFormType} from './profileDataForm/ProfileDataForm';
@@ -16,12 +16,20 @@ export type ProfileInfoType = {
     saveProfile: (fullName: string,
                   lookingForAJob: boolean,
                   lookingForAJobDescription: string,
-                  aboutMe: string) => void
+                  aboutMe: string,
+                  contacts: ContactsType) => void | Promise<void>
 }
 
-const ProfileInfo: React.FC<ProfileInfoType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}): JSX.Element => {
+const ProfileInfo: React.FC<ProfileInfoType> = ({
+                                                    profile,
+                                                    status,
+                                                    updateStatus,
+                                                    isOwner,
+                                                    savePhoto,
+                                                    saveProfile
+                                                }): JSX.Element => {
 
-    const [editMode, setEditMode] = useState<boolean>(false)
+    const [editMode, setEditMode] = useState<boolean>(false);
 
     if (!profile) {
         return <Preloader/>;
@@ -32,12 +40,16 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({profile, status, updateStatus, 
         }
     };
     const goToEditMode = () => {
-      setEditMode(true)
-    }
+        setEditMode(true);
+    };
 
     const onSubmit = (formData: ProfileDataFormType) => {
-        saveProfile(formData.fullName, formData.lookingForAJob, formData.lookingForAJobDescription, formData.aboutMe);
-        setEditMode(false)
+        // @ts-ignore
+        saveProfile(formData.fullName, formData.lookingForAJob, formData.lookingForAJobDescription, formData.aboutMe, formData.contacts).then(
+            () => {
+                setEditMode(false);
+            }
+        );
     };
 
     return (
@@ -49,7 +61,8 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({profile, status, updateStatus, 
                     <img src={profile.photos.large || photo} className={s.mainPhoto}/>
                     {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
 
-                    {editMode ? <ProfileDataForm initialValues={profile} onSubmit={onSubmit}/>: <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/> }
+                    {editMode ? <ProfileDataForm initialValues={profile} onSubmit={onSubmit}/> :
+                        <ProfileData profile={profile} isOwner={isOwner} goToEditMode={goToEditMode}/>}
                 </div>
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
             </div>
@@ -58,14 +71,14 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({profile, status, updateStatus, 
 };
 
 export type ProfileDataType = {
-    profile:ProfileType,
-    isOwner:boolean,
-    goToEditMode:()=>void
+    profile: ProfileType,
+    isOwner: boolean,
+    goToEditMode: () => void
 }
 
-const ProfileData:React.FC<ProfileDataType> = ({profile, isOwner,goToEditMode}) => {
+const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}) => {
     return <div>
-        { isOwner && <div>
+        {isOwner && <div>
             <button onClick={goToEditMode}>Edit</button>
         </div>}
         <div>
@@ -87,8 +100,8 @@ const ProfileData:React.FC<ProfileDataType> = ({profile, isOwner,goToEditMode}) 
         <div>
             <b>About me:</b>: {profile.aboutMe}
         </div>
-    </div>
-}
+    </div>;
+};
 
 export type ContactType = {
     contactTitle: string,

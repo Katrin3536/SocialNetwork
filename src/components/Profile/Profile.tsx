@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
-import {ProfileType} from '../../redux/profile-reducer';
+import {ContactsType, ProfileType} from '../../redux/profile-reducer';
 
 export type PropsType = {
     profile: ProfileType,
@@ -12,7 +12,8 @@ export type PropsType = {
     saveProfile: (fullName: string,
                   lookingForAJob: boolean,
                   lookingForAJobDescription: string,
-                  aboutMe: string) => void
+                  aboutMe: string,
+                  contacts:ContactsType) => void | Promise<void>
 }
 
 const Profile: React.FC<PropsType> = (props) => {

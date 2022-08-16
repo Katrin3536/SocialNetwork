@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {PhotosType, ProfileType} from '../redux/profile-reducer';
+import {ContactsType, PhotosType, ProfileType} from '../redux/profile-reducer';
 import {UsersType} from '../redux/users-reducer';
 
 export type MyResponseType = {
@@ -52,6 +52,10 @@ export type UsersResponseType = {
 
 }
 
+export type CaptchaResponseType = {
+    url:string
+}
+
 export const instance = axios.create({
     withCredentials: true,
     headers:
@@ -101,12 +105,14 @@ export const ProfileAPI = {
     saveProfile(fullName: string,
                 lookingForAJob: boolean,
                 lookingForAJobDescription: string,
-                aboutMe: string) {
+                aboutMe: string,
+                contacts:ContactsType) {
         return instance.put<MyResponseProfileType>(`/profile`, {
             fullName,
             lookingForAJob,
             lookingForAJobDescription,
-            aboutMe
+            aboutMe,
+            contacts
         })
             .then(response => response.data);
     }
@@ -127,4 +133,10 @@ export const AuthAPI = {
     }
 };
 
+export const SecurityAPI = {
+    getCaptchaUrl() {
+        return instance.get<CaptchaResponseType>(`security/get-captcha-url`)
+            .then(response => response.data);
+    },
+};
 

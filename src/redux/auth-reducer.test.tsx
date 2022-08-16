@@ -5,7 +5,8 @@ test('Data is get successfully from server', () => {
         id: null,
         email: null,
         login: null,
-        isAuth: false
+        isAuth: false,
+        captchaUrl:null
     };
 
     let action: AuthActionType = setAuthUserDataAC(12, '', '', true);

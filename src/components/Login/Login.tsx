@@ -51,14 +51,16 @@ type mapDispatchToPropsType = {
 }
 
 type mapStateToPropsType = {
-    isAuth: boolean
+    isAuth: boolean,
+    captchaUrl:string|null
 }
 
 type LoginPropsType = mapDispatchToPropsType & mapStateToPropsType
 
 const mapStateToProps = (state: ReducerType): mapStateToPropsType => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl
     };
 };
 
