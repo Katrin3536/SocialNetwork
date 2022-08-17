@@ -1,6 +1,5 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileInfo.module.css';
-import picture from '../../../assets/images/Cappadocia_2.jpg';
 import {Preloader} from '../../common/preloader/Preloader';
 import {ContactsType, ProfileType} from '../../../redux/profile-reducer';
 import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
@@ -55,7 +54,7 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({
     return (
         <div>
             <div>
-                <img className={s.picture} src={picture}/>
+                {/*<img className={s.picture} src={picture}/>*/}
                 <div className={s.descriptionBlock}>
 
                     <img src={profile.photos.large || photo} className={s.mainPhoto}/>

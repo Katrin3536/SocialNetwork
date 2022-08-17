@@ -20,8 +20,7 @@ const Profile: React.FC<PropsType> = (props) => {
     return (
         <div>
            <ProfileInfo profile={props.profile} saveProfile = {props.saveProfile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} savePhoto={props.savePhoto}/>
-            <MyPostsContainer
-            />
+            <MyPostsContainer/>
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Route, withRouter} from 'react-router-dom';
+import {Redirect, Route, withRouter} from 'react-router-dom';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
@@ -19,8 +19,16 @@ const ProfileContainer: React.LazyExoticComponent<React.ComponentType> = React.l
 const Login: React.LazyExoticComponent<React.ComponentType> = React.lazy(() => import('./components/Login/Login'));
 
 class App extends React.Component<AppPropsType, ReducerType> {
+    catchAllUnhandledErrors=(promiseRejectionEvent:PromiseRejectionEvent)=>{
+        alert(promiseRejectionEvent)
+}
     componentDidMount() {
         this.props.initializeApp();
+        window.addEventListener('unhandledrejection',this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection',this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -33,6 +41,7 @@ class App extends React.Component<AppPropsType, ReducerType> {
                 <HeaderContainer/>
                 <NavbarContainer/>
                 <div className="app-wrapper-content">
+                    <Route path="/" render={()=><Redirect to={'/profile'}/>}/>
                     <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
                     <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
                     <Route path="/news" component={News}/>
