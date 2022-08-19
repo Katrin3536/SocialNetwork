@@ -16,24 +16,24 @@ export type FormDataType = {
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit,error}) => {
     return (
-        <form onSubmit={handleSubmit}>
-                <p>To log in get registered
-                    <a href={'https://social-network.samuraijs.com/'}
-                       target={'_blank'}> here
-                    </a>
-                </p>
+        <form className={s.form} onSubmit={handleSubmit}>
+            <div className={s.loginDesc}><p>To log in get registered
+                <a href={'https://social-network.samuraijs.com/'}
+                   target={'_blank'}> here
+                </a>
+            </p>
                 <p>or use common test account credentials:</p>
                 <p>Email: free@samuraijs.com</p>
-                <p>Password: free</p>
+                <p>Password: free</p></div>
             <div><Field component={Input} validate={[required]} name={'email'} placeholder={'email'}/></div>
             <div><Field component={Input} type="password" validate={[required]} name={'password'}
                         placeholder={'Password'}/></div>
-            <div><Field component={Input} name={'rememberMe'} type="checkbox"/>remember me</div>
+            <div className={s.checkbox}><Field component={Input} name={'rememberMe'} type="checkbox"/>remember me</div>
             {error && <div className={s.formSummaryError}>
                 {error}
             </div>}
             <div>
-                <button>login</button>
+                <button>Log in</button>
             </div>
         </form>
     );
@@ -48,7 +48,7 @@ const Login:React.FC<LoginPropsType> = ({login, isAuth}) => {
     if (isAuth) {
         return <Redirect to={'/profile'}/>;
     }
-    return <div>
+    return <div className={s.login}>
         <h1>Login</h1>
         <LoginReduxForm onSubmit={onSubmit}/>
     </div>;

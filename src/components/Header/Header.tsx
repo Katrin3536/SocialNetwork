@@ -16,7 +16,7 @@ const Header = (props: HeaderPropsType): JSX.Element => {
             <div className={s.loginBlock}>
                 { props.isAuth
                     ? <div>{props.login} - <button onClick={props.logout}>Log out</button></div>
-                    : <NavLink to={'/Login'}>Login</NavLink>}
+                    : <NavLink to={'/Login'} className={s.btnLogin}>Login</NavLink>}
             </div>
         </header>
     );
