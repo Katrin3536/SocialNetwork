@@ -3,6 +3,8 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm, reset} from 'redux-form';
 import {Textarea} from '../../../common/formsControl/FormsControls';
 import {useDispatch} from 'react-redux';
+import {Button} from 'antd';
+
 
 export type FormDataType={
     newPostText: string;
@@ -18,7 +20,7 @@ export const AddNewPostForm:React.FC<InjectedFormProps<FormDataType>> = (props) 
                            placeholder={'Post message'} onClick={()=>dispatch(reset('profileAddNewPostForm'))}/>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <Button type="primary">Add post</Button>
                 </div>
             </form>
     )

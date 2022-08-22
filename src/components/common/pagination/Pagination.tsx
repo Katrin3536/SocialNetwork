@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import s from './Pagination.module.css';
 import cn from 'classnames';
+import DoubleRightOutlined from '@ant-design/icons/DoubleRightOutlined';
+import DoubleLeftOutlined from '@ant-design/icons/DoubleLeftOutlined';
 
 export type PaginationPropsType = {
     onPageChanged: (p: number) => void,
     totalUsersCount: number,
     pageSize: number,
     currentPage: number,
-    portionSize:number
+    portionSize: number
 }
 
 export const Pagination: React.FC<PaginationPropsType> = ({
@@ -28,13 +30,13 @@ export const Pagination: React.FC<PaginationPropsType> = ({
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
 
-    useEffect(()=>setPortionNumber(Math.ceil(currentPage/portionSize)), [currentPage]);
+    useEffect(() => setPortionNumber(Math.ceil(currentPage / portionSize)), [currentPage]);
 
     return (
         <div className={s.paginator}>
-            {portionNumber > 1 && <button onClick={() => {
+            {portionNumber > 1 && <DoubleLeftOutlined onClick={() => {
                 setPortionNumber(portionNumber - 1);
-            }}>PREV</button>}
+            }}/>}
             {}
             {pages.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                 .map((p) => {
@@ -44,9 +46,9 @@ export const Pagination: React.FC<PaginationPropsType> = ({
                         onClick={(e) => onPageChanged(p)
                         }>{p}</span>;
                 })}
-            {portionCount > portionNumber && <button onClick={() => {
+            {portionCount > portionNumber && <DoubleRightOutlined className={s.circleOutlined} onClick={() => {
                 setPortionNumber(portionNumber + 1);
-            }}>NEXT</button>}
+            }}/>}
         </div>
     );
 };

@@ -5,6 +5,7 @@ import {ContactsType, ProfileType} from '../../../redux/profile-reducer';
 import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
 import photo from '../../../assets/images/avatarIcon.jpg';
 import ProfileDataForm, {ProfileDataFormType} from './profileDataForm/ProfileDataForm';
+import {Button} from 'antd';
 
 export type ProfileInfoType = {
     profile: ProfileType,
@@ -78,7 +79,7 @@ export type ProfileDataType = {
 const ProfileData: React.FC<ProfileDataType> = ({profile, isOwner, goToEditMode}) => {
     return <div>
         {isOwner && <div>
-            <button onClick={goToEditMode}>Edit</button>
+            <Button type="primary" ghost onClick={goToEditMode} size='large'>Edit</Button>
         </div>}
         <div>
             <b>Full name:</b>: {profile.fullName}

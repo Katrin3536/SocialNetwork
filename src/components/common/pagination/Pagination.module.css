@@ -1,11 +1,23 @@
 .paginator {
     margin: 10px;
 }
+
 .pageNumber {
-    padding: 2px;
-    border: 1px solid grey;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background: #d3e2e7;
+    margin: 5px;
+    border-radius: 50%;
+    text-align: center;
 }
-.pageNumber.selectedPage{
+
+.pageNumber.selectedPage {
     font-weight: bold;
     border-color: black;
+}
+
+.circleOutlined {
+    margin-left: 5px;
 }
