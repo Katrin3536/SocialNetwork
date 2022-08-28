@@ -6,7 +6,7 @@ react-scripts, react-test-renderer, redux, redux-thunk, reselect, uuid.
 
 After git clone 'link' install all dependencies from package.json with:
 
-### YARN
+### yarn 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
