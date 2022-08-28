@@ -4,7 +4,7 @@ The following libraries are installed in this project:
 typescript, antd, axios, classnames, redux-form, gh-pages, jest, react, react-dom, react-redux, react-router-dom,
 react-scripts, react-test-renderer, redux, redux-thunk, reselect, uuid.
 
-After git clone 'link' install all dependencies from package.json with YARN.
+After git clone 'link' install all dependencies from package.json with [YARN].
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
